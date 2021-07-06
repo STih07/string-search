@@ -7,15 +7,6 @@ const path = require('path');
 
 const filename = path.resolve(__dirname, '..', '17.1-EX_XML_EDR_UO_23.06.2021.xml');
 
-let i = 0;
-const stream = byline(fs.createReadStream(filename, { encoding: 'utf8' }));
-stream.on('data', (line) => {
-    if (i++ < 5) {
-        console.log(line);
-    } else {
-        stream.destroy();
-    }
-});
 
 app.use('/', express.static(__dirname + '/static'));
 
