@@ -3,12 +3,25 @@ const byline = require('byline');
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3002;
+const path = require('path');
+
+const filename = path.resolve(__dirname, '..', '17.1-EX_XML_EDR_UO_23.06.2021.xml');
+
+let i = 0;
+const stream = byline(fs.createReadStream(filename, { encoding: 'utf8' }));
+stream.on('data', (line) => {
+    if (i++ < 5) {
+        console.log(line);
+    } else {
+        stream.destroy();
+    }
+});
 
 app.use('/', express.static(__dirname + '/static'));
 
 app.get('/search', (req, res) => {
     const { exact = true, NAME, ADDRESS, EDRPOU } = req.query;
-    const stream = byline(fs.createReadStream('data.xml', { encoding: 'utf8' }));
+    const stream = byline(fs.createReadStream(filename, { encoding: 'utf8' }));
     const paramvalues = [
         {
             param: 'NAME',
